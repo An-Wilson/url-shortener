@@ -5,21 +5,7 @@ const port = 3000
 const router = express.Router()
 const routes = require('./routes')
 
-// includes mongoose
-const mongoose = require('mongoose')
-
-if (process.env.NODE_ENV !== 'production') {
-  require('dotenv').config()
-}
-mongoose.connect(process.env.MONGODB_URI)
-const db = mongoose.connection
-
-db.on('error', () => {
-  console.log('mongodb error!')
-})
-db.once('open', () => {
-  console.log('mongodb connected!')
-})
+require('./config/mongoose')
 
 // includes handlebars
 const exphbs = require('express-handlebars')
