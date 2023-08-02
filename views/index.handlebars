@@ -4,8 +4,17 @@
   <h3>Success! Please use the link:</h3>
   <a id="generatedUrl" href="{{ origin }}/{{ shortUrl }}">{{ origin }}/{{ shortUrl }}</a>
 </div>
-  <button class="copy">Copy</button>
-  <a class="back" href="/">Go back</a>
+<button class="copy" onclick="copy()">Copy</button>
+<a class="back" href="/">Go back</a>
+
+<script>
+  function copy() {
+    const copyText = document.getElementById("generatedUrl")
+    navigator.clipboard.writeText(copyText.innerText)
+      .then(() => alert('copied'))
+      .catch(err => console.error(err))
+  }
+</script>
 
 {{else}}
 {{!-- 呈現輸入網址欄位，shortUrl 尚未存在 --}}

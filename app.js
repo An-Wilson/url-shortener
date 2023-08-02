@@ -3,7 +3,7 @@ const express = require('express')
 const app = express()
 const port = 3000
 const Url = require('./models/urls')
-const shortenUrl = require('./shortenUrl')
+const shortenUrl = require('./functions/shortenUrl')
 const shortLength = 5 // 可調整縮短網址的亂碼字數
 
 // includes mongoose

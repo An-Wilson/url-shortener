@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 const Url = require('../urls')
-const shortenUrl = require('../../shortenUrl')
+const shortenUrl = require('../../functions/shortenUrl')
 const shortLength = 5
 
 if (process.env.NODE_ENV !== 'production') {
