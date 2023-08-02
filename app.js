@@ -29,6 +29,10 @@ app.get('/', (req, res) => {
   res.render('index')
 })
 
+app.post('/urls', (req, res) => {
+  
+})
+
 app.listen(port, () => {
   console.log(`The Express server is listening on http://localhost:${port}`)
 })
