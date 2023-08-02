@@ -2,9 +2,8 @@
 const express = require('express')
 const app = express()
 const port = 3000
-const Url = require('./models/urls')
-const shortenUrl = require('./functions/shortenUrl')
-const shortLength = 5 // 可調整縮短網址的亂碼字數
+const router = express.Router()
+const routes = require('./routes')
 
 // includes mongoose
 const mongoose = require('mongoose')
@@ -29,38 +28,7 @@ app.set('view engine', 'handlebars')
 
 app.use(express.urlencoded({ extended: true }))
 app.use(express.static('public'))
-
-// setting routes
-app.get('/', (req, res) => {
-  res.render('index')
-})
-
-app.post('/urls', (req, res) => {
-  const inputUrl = req.body.inputUrl
-  if (inputUrl.trim()) {
-    Url.findOne({ originalUrl: inputUrl })
-      .then(data => data ? data : Url.create({ originalUrl: inputUrl, shortUrl: shortenUrl(shortLength) }))
-      .then(data => res.render('index', { origin: req.headers.origin, shortUrl: data.shortUrl }))
-      .catch(err => console.error(err))
-  } else {
-    res.redirect('/')
-  }
-})
-
-app.get('/:shortUrl', (req, res) => {
-  const { shortUrl } = req.params
-  Url.findOne({ shortUrl })
-    .then(data => {
-      if (!data) {
-        return res.render('error', {
-          errorMsg: "Can't found the link.",
-          errorUrl: req.headers.host + "/" + shortUrl
-        })
-      }
-      res.redirect(data.originalUrl)
-    })
-    .catch(err => console.error(err))
-})
+app.use(routes)
 
 app.listen(port, () => {
   console.log(`The Express server is listening on http://localhost:${port}`)
