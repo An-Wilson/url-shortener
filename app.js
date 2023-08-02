@@ -49,7 +49,14 @@ app.post('/urls', (req, res) => {
 app.get('/:shortUrl', (req, res) => {
   const shortUrl = req.params.shortUrl
   Url.findOne({ shortUrl })
-    .then(data => res.redirect(data.originalUrl))
+    .then(data => {
+      if (!data) {
+        const errorMsg = "Can't found the link."
+        const errorUrl = req.headers.host + "/" + shortUrl
+        return res.render('error', { errorMsg, errorUrl })
+      }
+      res.redirect(data.originalUrl)
+    })
     .catch(err => console.error(err))
 })
 
