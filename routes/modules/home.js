@@ -12,10 +12,12 @@ router.post('/', (req, res) => {
   const inputUrl = req.body.inputUrl
   if (inputUrl.trim()) {
     Url.findOne({ originalUrl: inputUrl })
+    // 從資料庫尋找使用者所輸入的原網址是否已存在於資料庫中？若資料庫已有該筆原網址資料，則回傳該筆資料的短網址 ; 若沒有存在則新增該筆資料
       .then(data => data ? data : Url.create({ originalUrl: inputUrl, shortUrl: shortenUrl(shortLength) }))
       .then(data => res.render('index', { origin: req.headers.origin, shortUrl: data.shortUrl }))
       .catch(err => console.error(err))
   } else {
+    // 若使用者沒有輸入內容或只輸入空白時，導回首頁介面
     res.redirect('/')
   }
 })
