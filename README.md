@@ -20,7 +20,7 @@ npm install
 ```
 npm run start
 ```
-5. 若終端機顯示 "App is listening on localhost:3000" 則代表專案運行正常，請打開瀏覽器輸入以下網址
+5. 若終端機顯示 "The Express server is listening on localhost:3000" 則代表專案運行正常，請打開瀏覽器輸入以下網址
 ```
 http://localhost:3000
 ```
