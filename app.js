@@ -36,9 +36,20 @@ app.get('/', (req, res) => {
 
 app.post('/urls', (req, res) => {
   const inputUrl = req.body.inputUrl
-  Url.findOne({ originalUrl: inputUrl })
-    .then(data => data ? data : Url.create({ originalUrl: inputUrl, shortUrl: shortenUrl(shortLength) }))
-    .then(data => res.render('index', { shortUrl: data.shortUrl }))
+  if (inputUrl.trim()) {
+    Url.findOne({ originalUrl: inputUrl })
+      .then(data => data ? data : Url.create({ originalUrl: inputUrl, shortUrl: shortenUrl(shortLength) }))
+      .then(data => res.render('index', { origin: req.headers.origin, shortUrl: data.shortUrl }))
+      .catch(err => console.error(err))
+  } else {
+    res.redirect('/')
+  }
+})
+
+app.get('/:shortUrl', (req, res) => {
+  const shortUrl = req.params.shortUrl
+  Url.findOne({ shortUrl })
+    .then(data => res.redirect(data.originalUrl))
     .catch(err => console.error(err))
 })
 
