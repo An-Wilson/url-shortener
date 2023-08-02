@@ -1,18 +1,18 @@
 {{#if shortUrl }}
 {{!-- 產生縮短網址後 --}}
-<h3>Success! Please use the link:</h3>
-<a href="{{ origin }}/{{ shortUrl }}">{{ origin }}/{{ shortUrl }}</a>
-<div>
-  <button>Copy</button>
-  <a href="/">Go back</button>
+<div class="result">
+  <h3>Success! Please use the link:</h3>
+  <a id="generatedUrl" href="{{ origin }}/{{ shortUrl }}">{{ origin }}/{{ shortUrl }}</a>
 </div>
+  <button class="copy">Copy</button>
+  <a class="back" href="/">Go back</a>
 
 {{else}}
 {{!-- 呈現輸入網址欄位，shortUrl 尚未存在 --}}
 <form action="/urls" method="POST">
-  <input type="text" name="inputUrl" placeholder="Input URL here">
-  <div>
-    <button type="submit">Shorten</button>
+  <div class="container">
+    <input type="text" name="inputUrl" placeholder="Input URL here">
+    <button type="submit" class="shorten">Shorten</button>
   </div>
 </form>
 {{/if}}

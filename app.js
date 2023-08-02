@@ -28,6 +28,7 @@ app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
 app.set('view engine', 'handlebars')
 
 app.use(express.urlencoded({ extended: true }))
+app.use(express.static('public'))
 
 // setting routes
 app.get('/', (req, res) => {
@@ -47,13 +48,14 @@ app.post('/urls', (req, res) => {
 })
 
 app.get('/:shortUrl', (req, res) => {
-  const shortUrl = req.params.shortUrl
+  const { shortUrl } = req.params
   Url.findOne({ shortUrl })
     .then(data => {
       if (!data) {
-        const errorMsg = "Can't found the link."
-        const errorUrl = req.headers.host + "/" + shortUrl
-        return res.render('error', { errorMsg, errorUrl })
+        return res.render('error', {
+          errorMsg: "Can't found the link.",
+          errorUrl: req.headers.host + "/" + shortUrl
+        })
       }
       res.redirect(data.originalUrl)
     })
