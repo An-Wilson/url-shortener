@@ -11,7 +11,6 @@ db.on('error', () => {
 })
 db.once('open', () => {
   console.log('mongodb connected!')
-  console.log(typeof (process.env.MONGODB_URI))
 })
 
 module.exports = db
